@@ -1,21 +1,17 @@
-def add(*args):
-    to_return = [[0 for _ in range(len(args[0][0]))] for _ in range(len(args[0]))]
-    for arg in args:
-        if len(arg) != len(to_return):
-            raise ValueError("Lists are not all the same shape!")
+def get_shape(my_list):
+    """Returns a list of the length of each sublist in a 2D list"""
+    return [len(row) for row in my_list]
 
-        for outer in range(len(args[0])):
-            if len(arg[outer]) != len(to_return[outer]):
-                raise ValueError("Lists are not all the same shape!")
 
-            for inner in range(len(args[0][outer])):
-                to_return[outer][inner] += arg[outer][inner]
-    return to_return
-#
-#
-# first = [[1, 2], [3, 8]]
-# second = [[-1, -2], [-3, -4]]
-#
-# print(add([[5]], [[-2]]))
-# print(add(first, second))
-# print(add([[5]], second))
+def add(*lists):
+    """Add an arbitrary number of 2D lists"""
+    first_shape = get_shape(lists[0])
+    if any(first_shape != get_shape(curr_list) for curr_list in lists[1::]):
+        raise ValueError("Unequel list sizes!")
+    return [[sum(values) for values in zip(*rows)] for rows in zip(*lists)]
+
+
+# def add(*lists):
+#     if any([len(row) for row in lists[0]] != [len(row) for row in curr_list] for curr_list in lists[1::]):
+#         raise ValueError("Unequel list sizes!")
+#     return [[sum(values) for values in zip(*rows)] for rows in zip(*lists)]
