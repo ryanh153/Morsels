@@ -1,0 +1,6 @@
+{
+  "test_fix_csv.py::FixCSVTests::test_call_with_too_many_files": true,
+  "test_fix_csv.py::FixCSVTests::test_delimiter_in_output": true,
+  "test_fix_csv.py::FixCSVTests::test_original_file_is_unchanged": true,
+  "test_fix_csv.py::FixCSVTests::test_pipe_file_to_csv_file": true
+}
