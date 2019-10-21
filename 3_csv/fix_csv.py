@@ -10,7 +10,6 @@ parser.add_argument("--out-delimiter", help="delimiter in destination file.", de
 
 args = parser.parse_args()
 
-with open(args.source, 'r') as read_from:
-    with open(args.destination, 'w') as write_to:
-        for line in read_from:
-            write_to.write(line.replace(args.in_delimiter,args.out_delimiter))
+with open(args.source, 'r') as read_from, open (args.destination, 'w') as write_to:
+    for line in read_from:
+        write_to.write(line.replace(args.in_delimiter,args.out_delimiter))
