@@ -1,2 +1,3 @@
-.idea/*
-.cahce/*
+.idea/
+*/.cache
+3_csv/.cache/v/cache/lastfailed
