@@ -1,14 +1,19 @@
-# import collections
-#
-#
+import collections
+
+
 # def tail(seq, n):
 #     """Takes sequence (seq) and integer (n). Returns last n items in seq."""
 #
+#     result = []
 #     if n > 0:
-#         result = collections.deque(maxlen=n)
-#         for item in seq:
-#             result.append(item)
-#     else:
-#         result = []
+#         result = list(collections.deque(seq, maxlen=n))
 #
-#     return list(result)
+#     return result
+
+def tail(seq, n):
+    """Takes sequence (seq) and integer (n). Returns last n items in seq."""
+
+    if n <= 0:
+        return []
+    else:
+        return list(collections.deque(seq, maxlen=n))
