@@ -1,0 +1,3 @@
+header,indent_style,indent_size
+*.py,space,4
+*.js,space,2
