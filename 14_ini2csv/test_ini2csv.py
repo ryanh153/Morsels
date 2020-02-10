@@ -38,7 +38,7 @@ class INI2CSV(unittest.TestCase):
         self.assertEqual(expected, output)
 
     # To test the Bonus part of this exercise, comment out the following line
-    # @unittest.expectedFailure
+    @unittest.expectedFailure
     def test_collapsed(self):
         contents = dedent("""
             [*.py]
