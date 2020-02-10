@@ -1,4 +1,4 @@
-from collections import Sequence
+from collections.abc import Sequence
 
 
 def window(iterable, n, *, fillvalue=None):
@@ -13,5 +13,8 @@ def window(iterable, n, *, fillvalue=None):
         while True:
             start += 1
             stop = start + n
-            held_list += [next(iterable) for _ in range(stop - len(held_list))]
-            yield tuple(held_list[start:stop])
+            try:
+                held_list += [next(iterable) for _ in range(stop - len(held_list))]
+                yield tuple(held_list[start:stop])
+            except StopIteration:
+                break
