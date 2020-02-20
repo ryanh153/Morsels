@@ -1,47 +1,32 @@
 import unicodedata
+from abc import ABC, abstractmethod
+from functools import total_ordering
+from collections import UserString
 
 
 def normalize_caseless(text):
     return unicodedata.normalize("NFKD", text.casefold())
 
 
-class FuzzyString(str):
+@total_ordering
+class TotalOrder(ABC):
+    @abstractmethod
+    def __eq__(self, other):
+        """Abstract. Child must define"""
+    def __lt__(self, other):
+        """Abstract: Child must define"""
+
+
+class FuzzyString(TotalOrder, UserString):
 
     def __eq__(self, other):
         if isinstance(other, str):
-            return normalize_caseless(self) == normalize_caseless(other)
-        else:
-            return False
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
+            return normalize_caseless(self.data) == normalize_caseless(other)
 
     def __lt__(self, other):
         if isinstance(other, str):
-            return normalize_caseless(self) < normalize_caseless(other)
-        else:
-            raise TypeError("Other must be of type string to compare to FuzzyString")
-
-    def __gt__(self, other):
-        if isinstance(other, str):
-            return normalize_caseless(self) > normalize_caseless(other)
-        else:
-            raise TypeError("Other must be of type string to compare to FuzzyString")
-
-    def __le__(self, other):
-        return self.__lt__(other) or self.__eq__(other)
-
-    def __ge__(self, other):
-        return self.__gt__(other) or self.__eq__(other)
+            return normalize_caseless(self.data) < normalize_caseless(other)
 
     def __contains__(self, item):
         if isinstance(item, str):
-            return normalize_caseless(item) in normalize_caseless(self)
-        else:
-            return False
-
-    def __add__(self, other):
-        if isinstance(other, str):
-            return FuzzyString(str(self) + str(other))
-        else:
-            raise TypeError("Other must be of type string to compare to FuzzyString")
+            return normalize_caseless(item) in normalize_caseless(self.data)
