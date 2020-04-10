@@ -1,29 +1,17 @@
-def format_fixed_width(lol, padding=2, widths=None, alignments=None):
-    if not len(lol):  # if list is length zero return string of length zero
-        return ""
+def format_fixed_width(rows, padding=2, widths=None, alignments=None):
+    if not len(rows):  # if list is length zero return string of length zero
+        s = ""
     else:
-        s = []
         if widths is None:  # if not passed widths set by max length in each column
-            widths = [0 for _ in lol[0]]
-            for row in lol:  # get max size for each column
-                for col, el in enumerate(row):
-                    if len(el) > widths[col]:
-                        widths[col] = len(el)
+            widths = [max(len(el) for el in col) for col in zip(*rows)]
 
         if alignments is None:  # if alignments not passed set all to be left
-            alignments = ['L' for _ in lol[0]]
+            alignments = [str.ljust for _ in rows[0]]
+        else:
+            alignments = [str.ljust if alignment == "L" else str.rjust for alignment in alignments]
 
-        for row in lol:  # make list of lists with padding added
-            for col, el in enumerate(row):
-                if alignments[col] == 'L':
-                    s.append(el)
-                    if col != len(row)-1:
-                        s.append(" "*(widths[col]-len(el)+padding))
-                else:
-                    s.append(" " * (widths[col] - len(el)))
-                    s.append(el)
-                    if col != len(row)-1:
-                        s.append(" " * padding)
-            s.append("\n")
-
-        return "".join(s[:-1])  # ignore last new line
+        joiner = " "*padding
+        s = "\n".join(
+            joiner.join(alignment(el, width) for el, width, alignment in zip(row, widths, alignments)).rstrip()
+            for row in rows)
+    return s
