@@ -40,7 +40,7 @@ class CondenseCSVTests(unittest.TestCase):
         self.assertLinesEqual(condense_csv(text, id_name='Track'), expected)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_commas_in_data(self):
         text = dedent("""
             01,Artist,Otis Taylor
@@ -62,7 +62,7 @@ class CondenseCSVTests(unittest.TestCase):
         self.assertLinesEqual(condense_csv(text, id_name='Track'), expected)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_read_headers_when_no_id_name_given(self):
         text = dedent("""
             NN,Property,Value
@@ -81,7 +81,7 @@ class CondenseCSVTests(unittest.TestCase):
         self.assertLinesEqual(condense_csv(text), expected)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_different_property_ordering_and_missing_properties(self):
         text = dedent("""
             01,Artist,Otis Taylor

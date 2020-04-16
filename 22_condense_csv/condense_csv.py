@@ -1,21 +1,22 @@
-from textwrap import dedent
+from io import StringIO
+import csv
 
 
-def condense_csv(text, id_name):
-    print(text)
-    lines = text.split("  ")
-    for line in text:
-        print(line)
-        id_val, key, val = line.split(',')
-        print(f"{id_name}: {id_val}, {key}: {val}")
+def condense_csv(text, id_name=None):
+    groups = {}
+    reader = csv.reader(text.splitlines())
+    if id_name is None:
+        [id_name, *_] = next(reader)
+    headers = {id_name: None}
+    for line in reader:
+        identifier, attribute, value = line
+        if identifier not in groups.keys():
+            groups[identifier] = {id_name: identifier}
+        headers[attribute] = None
+        groups[identifier][attribute] = value
+    out_file = StringIO()
+    writer = csv.DictWriter(out_file, fieldnames=headers.keys())
+    writer.writeheader()
+    writer.writerows(list(groups.values()))
 
-
-text = dedent("""
-            01,Title,Ran So Hard the Sun Went Down
-            02,Title,Honky Tonk Heroes (Like Me)
-        """).strip()
-
-for c in text:
-    print(c)
-
-# condense_csv(text, "Track")
+    return out_file.getvalue()
