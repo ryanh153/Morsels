@@ -1,53 +1,42 @@
+from dataclasses import dataclass, astuple
+from numbers import Number
+
+
+@dataclass(frozen=True)
 class Vector:
+
+    x: Number
+    y: Number
+    z: Number
 
     __slots__ = ('x', 'y', 'z')
 
-    def __init__(self, x, y, z):
-        super(Vector, self).__setattr__('x', x)
-        super(Vector, self).__setattr__('y', y)
-        super(Vector, self).__setattr__('z', z)
-
     def __iter__(self):
-        yield from (self.x, self.y, self.z)
+        yield from astuple(self)
 
     def __eq__(self, other):
         if isinstance(other, Vector):
-            if (self.x, self.y, self.z) == (other.x, other.y, other.z):
-                return True
-        return False
+            return tuple(self) == tuple(other)
+        return NotImplemented
 
     def __add__(self, other):
         if isinstance(other, Vector):
-            return Vector(self.x + other.x, self.y + other.y, self.z + other.z)
-        else:
-            return NotImplemented
+            return Vector(* (a + b for a, b in zip(self, other)))
+        return NotImplemented
 
     def __sub__(self, other):
         if isinstance(other, Vector):
-            return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
-        else:
-            return NotImplemented
+            return Vector(*(a - b for a, b in zip(self, other)))
+        return NotImplemented
 
     def __mul__(self, other):
-        try:
-            other = float(other)
-            return Vector(self.x * other, self.y * other, self.z * other)
-        except ValueError:
-            return NotImplemented
+        if isinstance(other, Number):
+            return Vector(*(a * other for a in self))
+        return NotImplemented
 
-    def __rmul__(self, other):
-        try:
-            other = float(other)
-            return Vector(self.x * other, self.y * other, self.z * other)
-        except ValueError:
-            return NotImplemented
+    __rmul__ = __mul__
 
     def __truediv__(self, other):
-        try:
-            other = float(other)
-            return Vector(self.x / other, self.y / other, self.z / other)
-        except ValueError:
-            return NotImplemented
-
-    def __setattr__(self, key, value):
-        raise AttributeError("Vectors are immutable")
+        if isinstance(other, Number):
+            return Vector(*(a / other for a in self))
+        return NotImplemented
