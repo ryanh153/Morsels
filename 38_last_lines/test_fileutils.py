@@ -88,22 +88,19 @@ class LastLinesTests(unittest.TestCase):
     # To test the Bonus part of this exercise, comment out the following line
     # @unittest.expectedFailure
     def test_lazy_reading(self):
-        N = 7000
-        contents = "hi\n" * N
+        contents = "hi\n" * 10000
         filename = 'lazy reading'
         with patch_open(contents, filename, max_read=DEFAULT_BUFFER_SIZE) as fake_open:
             lines = last_lines(filename)
             self.assertEqual(len(fake_open.file.reads), 0, 'no reads yet')
-            for i in range(N):
+            for i in range(10000):
                 if i == 100:
                     self.assertLess(
                         len(fake_open.file.reads),
                         3,
                         'should really only be 1 read at this point',
                     )
-                print(i)
-                print(next(lines))
-                # self.assertEqual(next(lines), "hi\n")
+                self.assertEqual(next(lines), "hi\n")
             self.assertEqual(next(lines, None), None)
         self.assertLess(
             len(fake_open.file.reads),
