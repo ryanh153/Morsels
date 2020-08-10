@@ -22,10 +22,6 @@ class FancyReader:
 class FancyLine:
     def __init__(self, csv_str, fieldnames=None):
         line_data = list(reader([csv_str], delimiter=',', quotechar='"'))[0]
-        if len(line_data) != len(fieldnames):
-            raise ValueError(f'Must have the same number of entries as header names in each row\n'
-                             f'line_data: {line_data}\n'
-                             f'fieldnames: {fieldnames}')
         self.data = list(zip(line_data, fieldnames))
         self.index = 0
 
@@ -45,17 +41,4 @@ class FancyLine:
         return self
 
     def __repr__(self):
-        entries = ['='.join([name, repr(val)]) for val, name in self.data]
-        inner_str = ", ".join(entries)
-        return f"Row({inner_str})"
-
-
-lines = ['my,fake,file', 'has,two,rows']
-f_reader = FancyReader(lines, fieldnames=['w1', 'w2', 'w3'])
-for row in f_reader:
-    print(row)
-    w1, w2, w3 = row
-    print(w2)
-    print(row.w1, row.w2, row.w3)
-    print(f_reader.line_num)
-    print()
+        return f"Row({', '.join('='.join([name, repr(val)]) for val, name in self.data)})"
