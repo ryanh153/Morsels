@@ -1,24 +1,17 @@
-from collections import UserDict, defaultdict
+from collections import UserDict, defaultdict, Mapping
 
 
 class Grouper(UserDict):
 
     def __init__(self, iterable=None, key=None):
-        self.data = defaultdict(list)
-        self.key = key
-        if iterable is None:
-            return
-        elif isinstance(iterable, dict):
-            self.data.update(iterable)
-        else:
-            for item in iterable:
-                self.data[self.key(item)].append(item)
+        self.data, self.key = defaultdict(list), key
+        self.update(iterable)
 
     def update(self, new_data):
-        if isinstance(new_data, dict):
+        if isinstance(new_data, Mapping):
             for key, values in new_data.items():
                 self.data[key].extend(values)
-        else:
+        elif new_data is not None:
             for item in new_data:
                 self.data[self.key(item)].append(item)
 
@@ -33,6 +26,6 @@ class Grouper(UserDict):
             return NotImplemented
         elif self.key != other.key:
             raise ValueError("Cannot add Groupers with different key functions")
-        new_group = Grouper(self.data, self.key)
+        new_group = type(self)(self, self.key)
         new_group.update(other.data)
         return new_group
