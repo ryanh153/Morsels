@@ -32,28 +32,3 @@ class cached_property:
 
     def deleter(self, fdel):
         return cached_property(self.fget, fdel=fdel)
-
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-
-    @cached_property
-    def diameter(self):
-        return self.radius * 2
-
-    @diameter.setter
-    def diameter(self, diameter):
-        self.radius = diameter / 2.0
-
-    @diameter.deleter
-    def diameter(self):
-        # This is a silly example
-        self.radius = 0
-
-
-c1 = Circle(5)
-c2 = Circle(7)
-print(f'D = {c1.diameter}\n')
-print(f'D = {c2.diameter}\n')
-c1.diameter = 20
-del c1.diameter
