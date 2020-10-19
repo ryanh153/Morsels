@@ -1,0 +1,3 @@
+Name,Price,Street,City,State,Comments
+Hattie B's Hot Chicken,$$,112 19th Ave S,Nashville,TN,very good
+Jim's Steaks,$,400 South St,Philadelphia,PA,I want to come back
