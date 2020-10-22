@@ -1,3 +1,5 @@
 Name,Price,Street,City,State,Comments
-Hattie B's Hot Chicken,$$,112 19th Ave S,Nashville,TN,very good
+Pok Pok,$$,3226 SE Division St,Portland,OR,
 Jim's Steaks,$,400 South St,Philadelphia,PA,I want to come back
+Bolton's Spicy Chicken & Fish,$$,624 Main St,Nashville,TN,
+Hattie B's,$$,112 19th Ave S,Nashville,TN,Bolton's was better

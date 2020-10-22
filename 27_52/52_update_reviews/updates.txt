@@ -1,3 +1,4 @@
 Name,Price,Street,City,State,Comments
-Pok Pok,$$,3226 SE Division St,Portland,OR
-Hattie B's Hot Chicken,$$,112 19th Ave S,Nashville,TN, New comment
+Pok Pok,$$,3226 SE Division St,Portland,OR,
+Bolton's Spicy Chicken & Fish,$$,624 Main St,Nashville,TN,
+Hattie B's,$$,112 19th Ave S,Nashville,TN,Bolton's was better
