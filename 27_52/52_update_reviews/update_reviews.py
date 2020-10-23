@@ -85,5 +85,4 @@ if __name__ == '__main__':
     with open(args.main_file, 'r+') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=main_reader.fieldnames)
         writer.writeheader()
-        for row in main.values():
-            writer.writerow(row)
+        writer.writerows(main.values())
