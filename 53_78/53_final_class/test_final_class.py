@@ -39,7 +39,7 @@ class UnsubclassableTests(unittest.TestCase):
             Point(1, 2, 3)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_error_raised_immediately(self):
         d = Unsubclassable()
         d.x = 4
@@ -51,7 +51,7 @@ class UnsubclassableTests(unittest.TestCase):
 
 
 # To test the Bonus part of this exercise, comment out the following line
-@unittest.expectedFailure
+# @unittest.expectedFailure
 class FinalClassTests(unittest.TestCase):
 
     """Tests for final_class."""
@@ -107,7 +107,7 @@ class FinalClassTests(unittest.TestCase):
 
 
 # To test the Bonus part of this exercise, comment out the following line
-@unittest.expectedFailure
+# @unittest.expectedFailure
 class UnsubclassableTypeTests(unittest.TestCase):
 
     """Tests for UnsubclassableType."""
