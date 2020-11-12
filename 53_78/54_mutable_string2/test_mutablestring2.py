@@ -81,7 +81,7 @@ class MutableStringTests(unittest.TestCase):
         self.assertEqual(greeting, "hey!")
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_in_place_operations(self):
         string = MutableString("these are")
         string2 = string
@@ -99,7 +99,7 @@ class MutableStringTests(unittest.TestCase):
         self.assertEqual(string, "these are words!these are words!")
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_string_methods(self):
         hiya = MutableString("hiya")
         heya = hiya.replace('i', 'e')
@@ -113,7 +113,7 @@ class MutableStringTests(unittest.TestCase):
         self.assertFalse(hiya.endswith(('i', 'e')))
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_joining(self):
         strings = [
             MutableString("these"),

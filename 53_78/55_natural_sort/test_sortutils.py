@@ -38,7 +38,7 @@ class NaturalSortTests(unittest.TestCase):
         )
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_natural_key_function_and_key_argument(self):
         from sortutils import natural_key
         self.assertEqual(
@@ -57,7 +57,7 @@ class NaturalSortTests(unittest.TestCase):
         )
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_sorting_with_numbers(self):
         self.assertEqual(
             natural_sort(['take 8', 'take 11', 'take 9', 'take 10', 'take 1']),
@@ -69,7 +69,7 @@ class NaturalSortTests(unittest.TestCase):
         )
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_allow_registering_different_types(self):
         from sortutils import natural_key
         @natural_key.register(tuple)
