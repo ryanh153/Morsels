@@ -1,24 +1,28 @@
 from abc import abstractmethod, ABCMeta
+import uuid
+
+
+MISSING = object()
 
 
 class Validator(metaclass=ABCMeta):
 
+    def __init__(self, initial=MISSING):
+        self.initial = initial
+        self.name = '_' + str(uuid.uuid4().hex)
+
     def __set_name__(self, owner, name):
-        self.public_name = name
-        self.private_name = '_' + name
+        self.name = '_' + name
 
     def __get__(self, obj, owner):
-        try:
-            return getattr(obj, self.private_name)
-        except AttributeError:
-            if self.value:
-                return self.value
-            else:
-                raise AttributeError("Value is not set")
+        if self.initial is MISSING:
+            return getattr(obj, self.name)
+        else:
+            return getattr(obj, self.name, self.initial)
 
     def __set__(self, obj, value):
         self.validate(value)
-        setattr(obj, self.private_name, value)
+        setattr(obj, self.name, value)
 
     @staticmethod
     @abstractmethod
@@ -28,11 +32,7 @@ class Validator(metaclass=ABCMeta):
 
 class PositiveNumber(Validator):
 
-    def __init__(self, value=None):
-        self.value = value
-
     @staticmethod
     def validate(value):
         if value <= 0:
             raise ValueError(f"Value must be positive ('passed {value}")
-
