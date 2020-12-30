@@ -1,38 +1,20 @@
+import functools
+
 SKIP = object()
 
 
-class partial:
-    def __init__(self, func, *args, **kwargs):
-        self.func = func
-        self.args = list(args)
-        self.kwargs = kwargs
-
+class partial(functools.partial):
     def __call__(self, *fargs, **fkwargs):
         final_args = replace_skips(self.args, fargs)
-        return self.func(*final_args, **self.kwargs, **fkwargs)
-
-    def __repr__(self):
-        args_str = ', '.join(repr(val) for val in self.args)
-        kwargs_str = ', '.join(f'{repr(key)}={repr(val)}' for key, val in self.kwargs.items())
-        return f'<{self.func.__name__}, {args_str}, {kwargs_str}>'
+        return self.func(*final_args, **self.keywords, **fkwargs)
 
     def partial(self, *args, **kwargs):
-        new_args = self.args + list(args)
-        new_kwargs = self.kwargs.copy()
-        new_kwargs.update(kwargs)
-        return partial(self.func, *new_args, **new_kwargs)
+        return partial(self.func, *self.args, *args, **{**self.keywords, **kwargs})
 
 
 def replace_skips(initial_args, new_args):
-    fargs_iter = iter(new_args)
-    final_args = []
-    for temp_arg in initial_args:
-        if temp_arg is SKIP:
-            try:
-                temp_arg = next(fargs_iter)  # fill in ones we skipped
-            except StopIteration:
-                raise TypeError("Not enough positional arguments")
-        final_args.append(temp_arg)
-
-    final_args += [val for val in fargs_iter]  # add on un-consumed arguments
-    return final_args
+    if len(new_args) < initial_args.count(SKIP):
+        raise TypeError("Not enough positional arguments")
+    new_args = list(new_args[::-1])  # make reversed for more efficient popping
+    final_args = [val if val is not SKIP else new_args.pop() for val in initial_args]
+    return final_args + new_args[::-1]  # add on un-consumed arguments
