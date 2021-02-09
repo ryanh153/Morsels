@@ -1,6 +1,6 @@
 class loop_tracker:
     BLANK = object()
-
+    
     def __init__(self, iterable):
         self.iterable = iter(iterable)
         self.empty_accesses = self.size = 0
