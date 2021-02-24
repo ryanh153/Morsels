@@ -77,7 +77,7 @@ class ProxyDictTests(unittest.TestCase):
     def test_items_values_len_get_and_iter(self):
         d = ProxyDict({'a': 'b', 'c': 'd'})
         self.assertEqual(set(d.items()), {('a', 'b'), ('c', 'd')})
-        self.assertEqual(set(d.values()), {'b', 'd'})
+        self.assertEqual(set(d.visits()), {'b', 'd'})
         self.assertEqual(len(d), 2)
         self.assertEqual(d.get('a'), 'b')
         self.assertEqual(d.get('a', 'z'), 'b')

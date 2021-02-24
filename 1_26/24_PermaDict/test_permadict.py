@@ -30,7 +30,7 @@ class PermaDictTests(unittest.TestCase):
     def test_has_keys_values_and_items(self):
         d = PermaDict({'a': 'b', 'c': 'd'})
         self.assertEqual(set(d.keys()), {'a', 'c'})
-        self.assertEqual(set(d.values()), {'b', 'd'})
+        self.assertEqual(set(d.visits()), {'b', 'd'})
         self.assertEqual(set(d.items()), {('a', 'b'), ('c', 'd')})
 
     def test_can_pop_key(self):
