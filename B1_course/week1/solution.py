@@ -1,42 +1,31 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 
-global visits
+visits = defaultdict(Counter)
 
 
 def collect_places():
-    global visits
-    visits = defaultdict(dict)
+    visits.clear()
     while True:
         loc = input('Tell me where you went: ')
-        if loc == '':
+        if not loc:
             break
         if loc.count(',') != 1:
             print("That's not a legal city, country combination")
-        else:
-            city, country = [val.strip() for val in loc.split(',')]
-            country_entry = visits[country]
-            if city not in country_entry:
-                country_entry.update({city: 1})
-            else:
-                country_entry[city] += 1
+            continue
+        city, country = [val.strip() for val in loc.split(',')]
+        visits[country.strip()][city.strip()] += 1
 
 
 def display_places():
-    global visits
-    sort_visits()
     print('You visited:')
-    for country in visits:
+    for country, entry in sorted(visits.items()):
         print(country)
-        for city in visits[country]:
-            if visits[country][city] == 1:
-                print(f'    {city}')
-            else:
-                print(f'    {city} ({visits[country][city]})')
+        for city, num in sorted(entry.items()):
+            num_str = f'({num})' if num > 1 else ''
+            print(f'    {city} {num_str}')
 
 
-def sort_visits():
-    global visits
-    visits = {k: v for k, v in sorted(visits.items())}
-    for entry in visits:
-        visits[entry] = {k: v for k, v in sorted(visits[entry].items())}
+if __name__ == '__main__':
+    collect_places()
+    display_places()
