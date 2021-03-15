@@ -2,19 +2,17 @@ import re
 
 
 def re_logtolist(data):
-    result = []
-    for line in data:
-        ip_address, timestamp, request = line_parse(line)
-        result.append({'ip_address': ip_address, 'timestamp': timestamp, 'request': request})
-    return result
+    # yield from (line_parse(line) for line in data)  # really should do this in modern python, but it doesn't pass
+    return [line_to_dict(line) for line in data]
 
 
-def line_parse(line):
+def line_to_dict(line):
     match = re.search(re_capture, line)
     if match is None:
-        return 'No IP address found', 'No timestamp found', 'No request found'
+        ip, time, request = 'No IP address found', 'No timestamp found', 'No request found'
     else:
-        return match.group(1), match.group(2), match.group(3)
+        ip, time, request = match.group(1), match.group(2), match.group(3)
+    return {'ip_address': ip, 'timestamp': time, 'request': request}
 
 
 logtolist = re_logtolist
