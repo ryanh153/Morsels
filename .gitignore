@@ -1,3 +1,4 @@
 .idea/
 */.cache
 1_26/3_csv/.cache/v/cache/lastfailed
+*.pyc

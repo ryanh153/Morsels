@@ -1,23 +1,7 @@
-#/usr/bin/python3
+import datetime
 
-import pytest
+date_format = '%d/%b/%Y:%H:%M:%S %z'
+date_str = '30/Jan/2010:00:03:18 +0200'
 
-
-## Code under test up here
-
-def return_false() :
-    return False
-
-
-## Unit tests below here.
-## Run with pytest:
-## 'pytest unit_test.py'
-
-## start with failing tests!
-
-def test_first() :
-    assert( factorial(1) == 1 )
-
-def test_function() :
-    # start with a failing test!
-    assert ( return_false() );
+result = datetime.datetime.strptime(date_str, date_format)
+print(result)
