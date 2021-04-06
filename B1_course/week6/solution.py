@@ -5,11 +5,11 @@ import numpy as np
 
 
 def average_age_under(people, max_age=maxsize):
-    return np.mean([d['age'] for d in people if d['age'] < max_age])
+    return np.mean([person['age'] for person in people if person['age'] < max_age])
 
 
 def hobby_list(people):
-    return [hobby for d in people for hobby in d['hobbies']]
+    return [hobby for person in people for hobby in person['hobbies']]
 
 
 def all_hobbies(people):
@@ -21,4 +21,4 @@ def hobby_counter(people):
 
 
 def n_most_common(people, num):
-    return [item[0] for item in Counter(hobby_list(people)).most_common(num)]
+    return [name for name, count in Counter(hobby_list(people)).most_common(num)]
