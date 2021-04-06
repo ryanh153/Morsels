@@ -1,11 +1,11 @@
-from contextlib import contextmanager, redirect_stdout, redirect_stderr
-from io import StringIO
-from importlib.machinery import SourceFileLoader
 import os
-from pathlib import Path
 import sys
-from tempfile import NamedTemporaryFile
 import unittest
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
+from importlib.machinery import SourceFileLoader
+from io import StringIO
+from pathlib import Path
+from tempfile import NamedTemporaryFile
 
 
 class UpdateReviewsTests(unittest.TestCase):

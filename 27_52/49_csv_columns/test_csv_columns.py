@@ -1,9 +1,8 @@
+import unittest
 from io import StringIO
 from textwrap import dedent
-import unittest
 
 from csv_columns import csv_columns
-
 
 unittest.util._MAX_LENGTH = 300
 

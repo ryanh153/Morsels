@@ -1,6 +1,5 @@
 import unittest
 
-
 from sortutils import natural_sort
 
 

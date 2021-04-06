@@ -1,6 +1,7 @@
-import numpy as np
 from collections import Counter
 from sys import maxsize
+
+import numpy as np
 
 
 def average_age_under(people, max_age=maxsize):

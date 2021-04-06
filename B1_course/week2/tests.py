@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import solution
 import pytest
+import solution
+
 
 def test_myrange2_is_a_list():
     output = solution.myrange2(10)

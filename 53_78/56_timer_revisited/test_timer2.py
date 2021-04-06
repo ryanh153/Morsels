@@ -1,6 +1,5 @@
-from time import sleep
 import unittest
-
+from time import sleep
 
 from timer2 import Timer
 

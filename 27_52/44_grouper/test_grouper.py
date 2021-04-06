@@ -1,5 +1,5 @@
-from operator import itemgetter
 import unittest
+from operator import itemgetter
 
 from grouper import Grouper
 

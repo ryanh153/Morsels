@@ -1,7 +1,6 @@
+import unittest
 from io import StringIO
 from textwrap import dedent
-import unittest
-
 
 from bettercsv import FancyReader
 

@@ -1,6 +1,5 @@
-from io import StringIO
 import unittest
-
+from io import StringIO
 
 from partial import partial
 

@@ -1,6 +1,5 @@
 import unittest
 
-
 from mutablestring2 import MutableString
 
 

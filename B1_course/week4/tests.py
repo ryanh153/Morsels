@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import pytest
-import solution
 import operator
 
+import pytest
+import solution
 
 logfilename = 'mini-access-log.txt'
 

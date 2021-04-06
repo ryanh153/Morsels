@@ -1,5 +1,5 @@
-from textwrap import dedent
 import unittest
+from textwrap import dedent
 
 from condense_csv import condense_csv
 

@@ -1,5 +1,5 @@
-from textwrap import dedent
 import unittest
+from textwrap import dedent
 
 from format_fixed_width import format_fixed_width
 

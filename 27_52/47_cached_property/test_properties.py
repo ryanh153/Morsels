@@ -1,7 +1,6 @@
 import gc
 import unittest
 
-
 from properties import cached_property
 
 

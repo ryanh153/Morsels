@@ -1,11 +1,11 @@
-from contextlib import contextmanager, redirect_stdout
-from io import StringIO
-from importlib.machinery import SourceFileLoader
 import os
 import sys
-from textwrap import dedent
-from tempfile import NamedTemporaryFile
 import unittest
+from contextlib import contextmanager, redirect_stdout
+from importlib.machinery import SourceFileLoader
+from io import StringIO
+from tempfile import NamedTemporaryFile
+from textwrap import dedent
 
 
 class INI2CSV(unittest.TestCase):

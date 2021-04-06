@@ -1,8 +1,7 @@
-from collections.abc import Generator
 import sys
-from timeit import default_timer
 import unittest
-
+from collections.abc import Generator
+from timeit import default_timer
 
 from float_range import float_range
 

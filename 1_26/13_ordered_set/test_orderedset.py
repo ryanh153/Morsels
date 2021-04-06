@@ -1,8 +1,7 @@
-from collections.abc import Mapping, Iterable
+import unittest
+from collections.abc import Iterable, Mapping
 from sys import getsizeof
 from timeit import default_timer
-import unittest
-
 
 from orderedset import OrderedSet
 

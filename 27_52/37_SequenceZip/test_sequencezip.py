@@ -1,6 +1,5 @@
 import unittest
 
-
 from sequence_zip import SequenceZip
 
 

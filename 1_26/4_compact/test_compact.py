@@ -1,6 +1,5 @@
 import unittest
 
-
 from compact import compact
 
 

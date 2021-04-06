@@ -1,6 +1,6 @@
+import unittest
 from contextlib import contextmanager
 from fractions import Fraction
-import unittest
 
 
 class IsOverTests(unittest.TestCase):
@@ -92,6 +92,7 @@ class MoreGetAgeTests(unittest.TestCase):
 def is_over(*args, **kwargs):
     """Call a fresh import of the ages.is_over function."""
     from importlib import reload
+
     import ages
     reload(ages)
     return ages.is_over(*args, **kwargs)
@@ -100,6 +101,7 @@ def is_over(*args, **kwargs):
 def get_age(*args, **kwargs):
     """Call a fresh import of the ages.get_age function."""
     from importlib import reload
+
     import ages
     reload(ages)
     return ages.get_age(*args, **kwargs)

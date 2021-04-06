@@ -1,5 +1,5 @@
-from bisect import bisect_left, bisect, insort
 import sys
+from bisect import bisect, bisect_left, insort
 
 
 class SortedList:

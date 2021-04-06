@@ -1,7 +1,7 @@
+import unittest
 from contextlib import contextmanager
 from datetime import date
-from locale import setlocale, LC_TIME
-import unittest
+from locale import LC_TIME, setlocale
 
 from month import Month
 

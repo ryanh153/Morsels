@@ -1,7 +1,6 @@
-from time import sleep
 import random
 import unittest
-
+from time import sleep
 
 from timer import Timer
 

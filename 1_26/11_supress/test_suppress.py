@@ -1,5 +1,5 @@
-from types import TracebackType
 import unittest
+from types import TracebackType
 
 from suppress import suppress
 

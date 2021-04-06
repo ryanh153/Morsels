@@ -1,8 +1,8 @@
 import os
-from os.path import abspath, exists, dirname, realpath
+import unittest
+from os.path import abspath, dirname, exists, realpath
 from shutil import rmtree
 from tempfile import mkdtemp
-import unittest
 
 from cd import cd
 

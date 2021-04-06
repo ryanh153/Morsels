@@ -32,10 +32,10 @@
 #     if args.collapsed:
 #         df.write("".join(out_line)+"\n")
 
-# Main problem (no bonus) with imports that are useful. Good practice
-from argparse import ArgumentParser
 import configparser
 import csv
+# Main problem (no bonus) with imports that are useful. Good practice
+from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("source_file")

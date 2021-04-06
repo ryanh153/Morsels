@@ -1,13 +1,14 @@
-from contextlib import contextmanager, ExitStack, redirect_stdout, redirect_stderr
-from io import StringIO
-from importlib.machinery import SourceFileLoader
 import os
-from pathlib import Path
 import sys
-from tempfile import NamedTemporaryFile
-from textwrap import dedent
 import unittest
 import warnings
+from contextlib import (ExitStack, contextmanager, redirect_stderr,
+                        redirect_stdout)
+from importlib.machinery import SourceFileLoader
+from io import StringIO
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+from textwrap import dedent
 
 
 class ConcatCheckTests(unittest.TestCase):

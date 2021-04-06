@@ -1,5 +1,5 @@
-from csv import reader
 from collections import namedtuplez
+from csv import reader
 
 
 class FancyReader:

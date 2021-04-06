@@ -1,7 +1,7 @@
 import unicodedata
 from abc import ABC, abstractmethod
-from functools import total_ordering
 from collections import UserString
+from functools import total_ordering
 
 
 def normalize_caseless(text):

@@ -1,6 +1,5 @@
-from collections import defaultdict, Counter
 import unittest
-
+from collections import Counter, defaultdict
 
 from proxydict import ProxyDict
 

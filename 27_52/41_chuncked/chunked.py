@@ -1,6 +1,5 @@
 from itertools import zip_longest
 
-
 SENTINAL = object()
 
 

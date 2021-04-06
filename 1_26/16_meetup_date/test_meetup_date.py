@@ -85,6 +85,7 @@ class MeetupDateTests(unittest.TestCase):
     # @unittest.expectedFailure
     def test_add_Weekday_object(self):
         from meetup_date import Weekday
+
         # First Monday
         self.assertEqual(
             meetup_date(2018, 1, nth=1, weekday=Weekday.MONDAY),

@@ -1,11 +1,11 @@
-from contextlib import contextmanager, redirect_stdout, redirect_stderr
-from io import BytesIO, TextIOWrapper
-from importlib.machinery import SourceFileLoader
 import os
 import sys
-from tempfile import NamedTemporaryFile
 import unittest
 import warnings
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
+from importlib.machinery import SourceFileLoader
+from io import BytesIO, TextIOWrapper
+from tempfile import NamedTemporaryFile
 
 
 class IConvTests(unittest.TestCase):

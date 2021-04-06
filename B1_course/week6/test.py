@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import solution
-import pytest
 from collections import Counter
+
+import pytest
+import solution
 
 all_people = [{'name': 'Reuven', 'age': 50, 'hobbies': ['Python', 'cooking', 'reading']},
               {'name': 'Atara', 'age': 20, 'hobbies': [

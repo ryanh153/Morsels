@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
+from io import StringIO
+
 import pytest
 from solution import logtolist, re_logtolist
-from io import StringIO
+
 
 @pytest.fixture
 def mini_mini_file():

@@ -1,6 +1,5 @@
 import unittest
 
-
 from chainsequence import ChainSequence
 
 

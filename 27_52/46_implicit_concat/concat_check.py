@@ -1,7 +1,6 @@
 from argparse import ArgumentParser, FileType
+from token import NL, STRING
 from tokenize import tokenize
-from token import STRING, NL
-
 
 if __name__ == '__main__':
     parser = ArgumentParser()

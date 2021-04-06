@@ -1,7 +1,6 @@
-from collections.abc import Generator
 import sys
 import unittest
-
+from collections.abc import Generator
 
 from float_range2 import float_range
 

@@ -1,6 +1,5 @@
 import unittest
 
-
 from final_class import Unsubclassable
 
 

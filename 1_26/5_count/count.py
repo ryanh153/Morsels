@@ -1,5 +1,5 @@
-from collections import Counter
 import re
+from collections import Counter
 
 
 def count_words(input_str):

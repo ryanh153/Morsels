@@ -1,5 +1,6 @@
 import unittest
 from itertools import count, repeat
+
 from strict_zip import strict_zip
 
 

@@ -1,5 +1,5 @@
-from time import perf_counter
 from statistics import mean, median
+from time import perf_counter
 
 
 class Timer:

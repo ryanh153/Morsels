@@ -1,5 +1,5 @@
-from functools import singledispatch
 import re
+from functools import singledispatch
 
 
 @singledispatch

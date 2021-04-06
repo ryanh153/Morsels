@@ -1,5 +1,5 @@
-from itertools import cycle
 import math
+from itertools import cycle
 
 
 class CyclicList:

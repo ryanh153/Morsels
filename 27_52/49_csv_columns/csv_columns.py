@@ -1,6 +1,6 @@
 import csv
-from itertools import zip_longest
 from collections import defaultdict
+from itertools import zip_longest
 
 
 def csv_columns(file_obj, headers=None, missing=None):

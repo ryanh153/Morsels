@@ -1,5 +1,6 @@
-from itertools import count
 import unittest
+from itertools import count
+
 from interleave import interleave
 
 

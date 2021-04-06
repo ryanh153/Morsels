@@ -1,7 +1,8 @@
 # Tests are below here
-import solution
-from io import StringIO
 import sys
+from io import StringIO
+
+import solution
 
 empty_place_inputs = StringIO('\n')
 one_place_input = StringIO('London, England\n\n')

@@ -1,4 +1,4 @@
-from collections import UserDict, defaultdict, Mapping
+from collections import Mapping, UserDict, defaultdict
 
 
 class Grouper(UserDict):

@@ -1,5 +1,5 @@
-from datetime import date
 from calendar import monthcalendar
+from datetime import date
 from enum import IntEnum
 
 

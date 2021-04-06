@@ -1,6 +1,5 @@
-from textwrap import dedent
 import unittest
-
+from textwrap import dedent
 
 from normalize_sentences import normalize_sentences
 

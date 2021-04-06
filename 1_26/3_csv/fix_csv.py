@@ -21,8 +21,8 @@
 #     writer.writerows(reader)
 
 """Bonus two version"""
-import csv
 import argparse
+import csv
 
 parser = argparse.ArgumentParser()
 # positional

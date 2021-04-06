@@ -1,12 +1,8 @@
-from contextlib import contextmanager
-from io import (
-    BytesIO,
-    UnsupportedOperation,
-    TextIOWrapper,
-    DEFAULT_BUFFER_SIZE,
-)
-from textwrap import dedent
 import unittest
+from contextlib import contextmanager
+from io import (DEFAULT_BUFFER_SIZE, BytesIO, TextIOWrapper,
+                UnsupportedOperation)
+from textwrap import dedent
 from unittest.mock import patch
 
 from last_lines import last_lines

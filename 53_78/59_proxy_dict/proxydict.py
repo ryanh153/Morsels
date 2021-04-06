@@ -1,5 +1,5 @@
-from collections.abc import Mapping
 from collections import ChainMap
+from collections.abc import Mapping
 
 
 class ProxyDict(Mapping):

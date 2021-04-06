@@ -1,6 +1,5 @@
 import collections
 
-
 # def tail(seq, n):
 #     """Takes sequence (seq) and integer (n). Returns last n items in seq."""
 #

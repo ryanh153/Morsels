@@ -1,6 +1,5 @@
 import unittest
 
-
 from tags_equal import tags_equal
 
 

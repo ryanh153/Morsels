@@ -1,8 +1,7 @@
-from timeit import default_timer
 import unittest
+from timeit import default_timer
 
 from sortedlist import SortedList
-
 
 MANY_BIG_NUMBERS = list(range(50000))
 

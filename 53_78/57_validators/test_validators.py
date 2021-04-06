@@ -1,7 +1,6 @@
 import gc
 import unittest
 
-
 from validators import PositiveNumber
 
 
@@ -108,6 +107,7 @@ class ValidatorTests(unittest.TestCase):
     # @unittest.expectedFailure
     def test_validate_method_on_new_class(self):
         from collections.abc import Sequence
+
         from validators import Validator
         class SequenceOnly(Validator):
             def validate(self, value):
@@ -127,6 +127,7 @@ class ValidatorTests(unittest.TestCase):
     # @unittest.expectedFailure
     def test_validate_method_required(self):
         from collections.abc import Sequence
+
         from validators import Validator
         class SequenceOnly(Validator):
             def valid(self, value):

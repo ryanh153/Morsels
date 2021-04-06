@@ -1,6 +1,5 @@
-from abc import abstractmethod, ABCMeta
 import uuid
-
+from abc import ABCMeta, abstractmethod
 
 MISSING = object()
 

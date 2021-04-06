@@ -1,6 +1,7 @@
+import unittest
 from collections import OrderedDict
 from datetime import date
-import unittest
+
 from unpacker import Unpacker
 
 

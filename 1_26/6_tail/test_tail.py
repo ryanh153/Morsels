@@ -1,6 +1,5 @@
 import unittest
 
-
 from tail import tail
 
 

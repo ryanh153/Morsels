@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import solution
 import csv
+
+import solution
 
 filename = 'cities.csv'
 
