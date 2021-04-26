@@ -1,5 +1,12 @@
-from itertools import chain
-
-
 def multiziperator(*iterables):
-    yield from chain.from_iterable(zip(*iterables))
+    iters = [iter(val) for val in iterables]
+    while True:
+        try:
+            curr = [next(i) for i in iters]
+            yield from curr
+        except StopIteration:
+            return
+
+
+res = multiziperator('abcd', 'efg')
+print(list(res))
