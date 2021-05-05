@@ -9,7 +9,6 @@ class DirFileHash:
         self.dir_path = Path(dir_path)
 
     def __getitem__(self, item):
-        file = self.dir_path.joinpath(item)
-        if file.exists():
+        if (file := self.dir_path.joinpath(item)).exists():
             return md5(open(file, 'rb').read()).hexdigest()
         return None
