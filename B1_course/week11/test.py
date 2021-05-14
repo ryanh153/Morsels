@@ -39,3 +39,5 @@ def test_all_in_dir(dir_with_files):
         content = getattr(string, one_filename).encode()
         m.update(content)
         assert dfh[one_filename] == m.hexdigest()
+
+
