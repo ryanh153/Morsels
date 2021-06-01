@@ -1,9 +1,10 @@
-import requests
+import queue
+import threading
 from collections import defaultdict
 from time import perf_counter
-from typing import List, Dict, Tuple
-import threading
-import queue
+from typing import Dict, List, Tuple
+
+import requests
 
 
 def speed_test(urls: List[str], number_of_checks: int = 4) -> Dict[str, List[float]]:
@@ -37,7 +38,7 @@ def speed_test(urls: List[str], number_of_checks: int = 4) -> Dict[str, List[flo
 
 
 def time_request(url: str, q: queue.Queue[Tuple[str, float]]) -> None:
+    """Function for timing an http request and putting the result on a queue.Queue object"""
     start = perf_counter()
     requests.get(url)
     q.put((url, perf_counter()-start))
-
