@@ -1,7 +1,7 @@
-from typing import Union, Any
+from typing import Union, Any, Callable
 
 
-def threshold_equal(attr_str: str, threshold: float = 2.0) -> object:
+def threshold_equal(attr_str: str, threshold: float = 2.0) -> Callable[[type], object]:
     """Class decorator with arguments. When comparing equality of instances of the decorated
     class the given attribute and tolerance will be used."""
 
