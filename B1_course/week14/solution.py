@@ -5,7 +5,7 @@ def threshold_equal(attr_str: str, threshold: float = 2.0) -> object:
     """Class decorator with arguments. When comparing equality of instances of the decorated
     class the given attribute and tolerance will be used."""
 
-    def inner(cls: type) -> object:
+    def decorated_class(cls: type) -> object:
         """Add the appropriate equality method to the class being decorated"""
         # Note: NotImplementedType is not in python 3.9 (will be in python 3.10). Using Any as is standard practice
         def equality_func(curr: object, other: object) -> Union[bool, Any]:
@@ -16,4 +16,4 @@ def threshold_equal(attr_str: str, threshold: float = 2.0) -> object:
 
         setattr(cls, '__eq__', equality_func)
         return cls
-    return inner
+    return decorated_class
