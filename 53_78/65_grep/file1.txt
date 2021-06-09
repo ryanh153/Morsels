@@ -1,5 +1,0 @@
-Hello
-My name is Trey
-Welcome to my file
-This file is lovely
-Goodbye
