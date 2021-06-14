@@ -5,6 +5,7 @@ import os
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse arguments the enable grep matching"""
     parser = argparse.ArgumentParser()
     parser.add_argument('re_str', type=str, help='String to search for')
     parser.add_argument('files', type=argparse.FileType('rt'), nargs='+', help='File to search in')
@@ -18,7 +19,7 @@ def parse_args() -> argparse.Namespace:
 
 def search_file(file: TextIO, compiled_re: Pattern[str], add_line_number: bool, show_filename: bool,
                 invert_matching: bool, initial_tab: bool) -> None:
-
+    """Search the file using the compiled regular expression and print based on boolean flags"""
     file_size = get_file_size(file)
 
     for line_number, line in enumerate(file):
@@ -27,14 +28,17 @@ def search_file(file: TextIO, compiled_re: Pattern[str], add_line_number: bool, 
 
 
 def get_file_size(file: TextIO) -> int:
+    """Get size of file in bytes without altering file"""
+    starting_pos = file.tell()
     file.seek(0, os.SEEK_END)
     file_size = file.tell()
-    file.seek(0)
+    file.seek(0, starting_pos)
     return file_size
 
 
 def print_result(string: str, file: TextIO, add_line_number: bool, line_number: int, show_filename: bool,
                  initial_tab: bool, file_size: int) -> None:
+    """Print the result of a match based on boolean flags"""
     file_expression = f'{file.name}:' if show_filename else ''
     file_spacer = '\t' if initial_tab and show_filename else ''
 
@@ -44,12 +48,6 @@ def print_result(string: str, file: TextIO, add_line_number: bool, line_number: 
     line_spacer = '\t' if initial_tab else ''
 
     print(f'{file_expression}{file_spacer}{line_expression}{line_spacer}{string.rstrip(os.linesep)}')
-
-
-def get_spacer(initial_tab: bool, add_line_number: bool, file_size: int) -> str:
-    if not (initial_tab and add_line_number):
-        return ''
-    return ''.join([' ' for _ in range(len(str(file_size))-1)])
 
 
 if __name__ == '__main__':
