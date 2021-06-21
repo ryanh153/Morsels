@@ -148,7 +148,7 @@ class ComputedPropertyTests(unittest.TestCase):
         self.assertEqual(Thing.x.__get__(thing, Thing), 5)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_multiple_dependency_attributes(self):
         from math import hypot
         class RightTriangle:
@@ -174,7 +174,7 @@ class ComputedPropertyTests(unittest.TestCase):
         self.assertEqual(triangle.c, 0)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_missing_attributes(self):
         class Cube:
             def __init__(self, width, height, depth):
@@ -206,7 +206,7 @@ class ComputedPropertyTests(unittest.TestCase):
         self.assertEqual(cube.volume, 4)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_setter_attribute(self):
         class Circle:
             def __init__(self, radius=1):
