@@ -126,6 +126,7 @@ class ReconcileAccountsTests(unittest.TestCase):
             ['2017-05-02', 'A', '1.00', 'a', 'FOUND'],
             ['2017-05-01', 'A', '1.00', 'a', 'FOUND'],
         ]
+
         self.assertEqual(
             reconcile_accounts(records1, records2),
             (results1, results2)
