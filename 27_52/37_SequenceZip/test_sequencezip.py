@@ -69,7 +69,7 @@ class SequenceZipTests(unittest.TestCase):
                     raise AssertionError("Equality check shouldn't iterate over elements")
                 return  super().__getitem__(index)
             def __eq__(self, other):
-                return self.data == other.data
+                return self.data == other.heap
         a = SillySequence([4, 5, 6, 7])
         b = SillySequence([4, 5, 6, 7])
         c = SillySequence([1, 2, 3, 4])
