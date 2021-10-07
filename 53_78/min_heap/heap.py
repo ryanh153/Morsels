@@ -2,6 +2,7 @@ from heapq import heapify, heappop, heappush
 
 
 class Comparator:
+    __slots__ = 'key', 'data', 'item'
 
     def __init__(self, value, key=None):
         self.key = key
@@ -19,7 +20,7 @@ class InverseComparator(Comparator):
 
 
 class MinHeap:
-
+    __slots__ = ('key', 'heap')
     COMPARATOR = Comparator
 
     def __init__(self, iterable, key=None):
