@@ -5,13 +5,14 @@ from functools import partial
 def track_instances(cls_or_str):
 
     def class_decorator(cls, name):
-
-        def init(self, *args, **kwargs):
+        def __init__(self, *args, **kwargs):
+            original_init(self, *args, **kwargs)
             getattr(self, name).add(self)
-            super(Temp, self).__init__(*args, **kwargs)
 
-        Temp = type('Temp', (cls,), {'__init__': init, name: WeakSet()})
-        return Temp
+        setattr(cls, name, WeakSet())
+        original_init = cls.__init__
+        cls.__init__ = __init__
+        return cls
 
     if isinstance(cls_or_str, str):
         return partial(class_decorator, name=cls_or_str)
@@ -19,16 +20,15 @@ def track_instances(cls_or_str):
 
 
 class InstanceTracker(type):
-    def __new__(cls, name, bases, attrs):
-        tracked = super(InstanceTracker, cls).__new__(cls, name, bases, attrs)
-        tracked.instances = WeakSet()
+    def __init__(cls, name, bases, attrs):
+        super().__init__(name, bases, attrs)  # Construct from our parent (type)
+        cls._instances = WeakSet()
 
-        def init(self, *args, **kwargs):
-            getattr(self, 'instances').add(self)
-            attrs['__init__'](self, *args, **kwargs)
+    def __call__(cls, *args, **kwargs):
+        # This is called when an instance of the class using us for a meta is made
+        instance = super().__call__(*args, **kwargs)  # Again rely on type to do the normal stuff
+        cls._instances.add(instance)
+        return instance
 
-        tracked.__init__ = init
-        return tracked
-
-    def __iter__(self):
-        return iter(self.instances)
+    def __iter__(cls):
+        yield from cls._instances
