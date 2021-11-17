@@ -1,127 +1,93 @@
-from io import StringIO
+import sys
+from io import TextIOBase, StringIO
 from contextlib import contextmanager, redirect_stdout, redirect_stderr
-import builtins
-from os import linesep
 
 
-class WriteSpy:
+class WriteSpy(TextIOBase):
 
-    def __init__(self, *files, close=True):
-        self.files = [file for file in files]
+    def __init__(self, stream, spy, close=True):
+        self.stream = stream
+        self.spy = spy
         self._close = close
-        self.closed = False
 
-    def __enter__(self):
-        self._open_all_files()
-        self.closed = False
-        return self
+    def write(self, text):
+        self._checkClosed()
+        self.stream.write(text)
+        self.spy.write(text)
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type is not None:
-            raise exc_type(exc_val, exc_tb)
-        if self._close:
-            self._close_all_files()
-        self.closed = True
-
-    def write(self, string):
-        if self.closed:
-            raise IOError(f'Writing to closed {self!r}')
-        for file in self.files:
-            file.write(string)
+    def writable(self) -> bool:
+        self._checkClosed()
+        return True
 
     def close(self):
         if self._close:
-            self._close_all_files()
-        self.closed = True
-
-    def writable(self):
-        if self.closed:
-            return False
-        return all([file.writable() for file in self.files])
-
-    def _close_all_files(self):
-        for file in self.files:
-            if hasattr(file, 'close'):
-                file.close()
-
-    def _open_all_files(self):
-        for file in self.files:
-            if hasattr(file, 'open'):
-                file.open()
-
-
-class Spy:
-
-    def __init__(self):
-        self.stored = StringIO()
-
-    def write(self, string):
-        self.stored.write(string)
+            self.stream.close()
+            self.spy.close()
+        super().close()
 
 
 @contextmanager
 def stdout_spy():
-    spy = Spy()
-    with redirect_stdout(spy):
-        yield spy.stored
-    print(spy.stored.getvalue()[:-1])  # Strip last newline character
+    logged = StringIO()
+    with redirect_stdout(WriteSpy(sys.stdout, logged, close=False)):
+        yield logged
+
+
+class ReadSpy(TextIOBase):
+
+    def __init__(self, stream, spy):
+        self.stream = stream
+        self.spy = spy
+
+    def read(self):
+        result = self.stream.read()
+        self.spy.write(result)
+        return result
+
+    def readline(self):
+        result = self.stream.readline()
+        self.spy.write(result)
+        return result
 
 
 @contextmanager
 def stdin_spy():
-    def my_input(*args, **kwargs):
-        # Call the normal input but store the result
-        response = original_input(*args, **kwargs)
-        stored.write(response + '\n')
-        return response
-
-    stored = StringIO()
-    original_input = getattr(builtins, 'input')
-    setattr(builtins, 'input', my_input)
-    try:
-        yield stored
-    finally:
-        setattr(builtins, 'input', original_input)
+    logged = StringIO()
+    real_stdin, sys.stdin = sys.stdin, ReadSpy(sys.stdin, logged)
+    yield logged
+    sys.stdin = real_stdin
 
 
-class StringSpy:
+class Spy:
 
-    def __init__(self):
-        self.stored = ''
-
-    def write(self, string):
-        self.stored += string
-
-
-class BetterSpy:
-
-    def __init__(self):
-        self.stdin = ''
-        self._stdout = StringSpy()
-        self._stderr = StringSpy()
+    def __init__(self, out_spy, in_spy, err_spy):
+        self.out_spy = out_spy
+        self.in_spy = in_spy
+        self.err_spy = err_spy
 
     @property
     def stdout(self):
-        return self._stdout.stored
+        return self.out_spy.spy.getvalue()
+
+    @property
+    def stdin(self):
+        return self.in_spy.spy.getvalue()
 
     @property
     def stderr(self):
-        return self._stderr.stored
+        return self.err_spy.spy.getvalue()
 
 
 @contextmanager
 def iospy():
-    def my_input(*args, **kwargs):
-        # Call the normal input but store the result
-        response = original_input(*args, **kwargs)
-        context_spy.stdin += f'{response}{linesep}'
-        return response
+    out_logged, in_logged, err_logged = StringIO(), StringIO(), StringIO()
+    out_spy = WriteSpy(sys.stdout, out_logged, close=False)
+    in_spy = ReadSpy(sys.stdin, in_logged)
+    err_spy = WriteSpy(sys.stderr, err_logged, close=False)
 
-    context_spy = BetterSpy()
-    original_input = getattr(builtins, 'input')
-    setattr(builtins, 'input', my_input)
-    with redirect_stdout(context_spy._stdout), redirect_stderr(context_spy._stderr):
-        yield context_spy
+    real_stdin, sys.stdin = sys.stdin, in_spy
+    spy = Spy(out_spy, in_spy, err_spy)
 
-    print(context_spy.stdout.strip('\n'), end='')  # Drop last newline and don't add any
-    setattr(builtins, 'input', original_input)
+    with redirect_stdout(out_spy), redirect_stderr(err_spy):
+        yield spy
+    sys.stdin = real_stdin
