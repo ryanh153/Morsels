@@ -54,9 +54,14 @@ def make_repr(*, args=None, kwargs=None):
     return make_string_repr
 
 
+# noinspection PyPep8Naming
 class auto_repr:
     """
     Class decorator that adds a __repr__ method based on the args/kwargs passed.
+    :param to_decorate:
+        If we are being used with no arguments the class itself will be passed to us directly. In this case infer what
+        args and kwargs should be based on call signatures and return the decorated object.
+        If this is None we were called with args/kwargs so we'll save them and use them when we are called
     :param args:
         An iterable of strings that are attributes of the class and passed to it's __init__ as positional arguments
     :param kwargs
@@ -64,13 +69,13 @@ class auto_repr:
     """
 
     def __new__(cls, to_decorate=None, args=None, kwargs=None):
-        if to_decorate is not None:  # We are being called with not arguments. Add repr now
+        # We are being called with not arguments. Want to add repr and return decorated class now
+        if to_decorate is not None:
             # Get data to put in repr (all as keyword args)
-            sig = signature(to_decorate.__init__)
-            kwargs = [key for key in sig.parameters if key is not 'self']
+            kwargs = [key for key in signature(to_decorate.__init__).parameters if key is not 'self']
             setattr(to_decorate, '__repr__', make_repr(kwargs=kwargs))
             return to_decorate
-        else:
+        else:  # Called with arguments. Proceed as normal for class decorate with arguments
             return super().__new__(cls)
 
     def __init__(self, *, args=None, kwargs=None):
