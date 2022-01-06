@@ -1,4 +1,5 @@
 from inspect import signature
+from itertools import chain
 
 
 def format_arguments(*args, **kwargs) -> str:
@@ -11,14 +12,8 @@ def format_arguments(*args, **kwargs) -> str:
     :return:
         A string representation of the inputs
     """
-    result = ''  # blank in case no arguments passed
-    if len(args):  # join the repr of all args
-        result += ', '.join([repr(arg) for arg in args])
-    if len(kwargs) and len(args):  # If we have args and kwargs join them with a comma
-        result += ', ' + ', '.join([f'{key}={value!r}' for key, value in kwargs.items()])
-    elif len(kwargs):  # Otherwise just add the kwarg representation (no single quotes around keys)
-        result += ', '.join([f'{key}={value!r}' for key, value in kwargs.items()])
-    return result
+    return ', '.join(chain([f'{arg!r}' for arg in args],
+                           [f'{key}={value!r}' for key, value in kwargs.items()]))
 
 
 def make_repr(*, args=None, kwargs=None):
@@ -54,42 +49,28 @@ def make_repr(*, args=None, kwargs=None):
     return make_string_repr
 
 
-# noinspection PyPep8Naming
-class auto_repr:
+def auto_repr(cls=None, /, *, args=None, kwargs=None):
     """
-    Class decorator that adds a __repr__ method based on the args/kwargs passed.
-    :param to_decorate:
-        If we are being used with no arguments the class itself will be passed to us directly. In this case infer what
-        args and kwargs should be based on call signatures and return the decorated object.
-        If this is None we were called with args/kwargs so we'll save them and use them when we are called
+    Class decorator that can optionally take arg/kwargs that are expected to be class attributes.
+    If they are not given they will be inferred from the class' __init__ signature
+    :param cls:
+        Class to be decorated (if not arguments passed). Position only
     :param args:
-        An iterable of strings that are attributes of the class and passed to it's __init__ as positional arguments
-    :param kwargs
-        An iterable of strings that are attributes of the class and passed in to it's __init__ as keyword arguments
+        Position arguments that appear as class attributes
+    :param kwargs:
+        Keyword arguments that appear as class attributes
+    :return:
+        The class with the __repr__ function added (if cls passed) or a decorator that accepts a class and then
+        decorates it using args/kwargs
     """
+    if cls is not None:  # infer parameters and return decorated class
+        kwargs = [key for key in signature(cls.__init__).parameters if key is not 'self']  # skip self
+        setattr(cls, '__repr__', make_repr(kwargs=kwargs))
+        return cls
 
-    def __new__(cls, to_decorate=None, args=None, kwargs=None):
-        # We are being called with not arguments. Want to add repr and return decorated class now
-        if to_decorate is not None:
-            # Get data to put in repr (all as keyword args)
-            kwargs = [key for key in signature(to_decorate.__init__).parameters if key is not 'self']
-            setattr(to_decorate, '__repr__', make_repr(kwargs=kwargs))
-            return to_decorate
-        else:  # Called with arguments. Proceed as normal for class decorate with arguments
-            return super().__new__(cls)
-
-    def __init__(self, *, args=None, kwargs=None):
-        self.args, self.kwargs = args, kwargs
-
-    def __call__(self, to_decorate=None):
-        """
-        :param to_decorate:
-            Class to decorate
-        :return:
-            Class with the __repr__ method set
-        """
-        if self.args is None and self.kwargs is None:  # Called with no arguments -> infer them
-            pass
-
-        setattr(to_decorate, '__repr__', make_repr(args=self.args, kwargs=self.kwargs))
+    # Otherwise we were passed the parameters. Return a decorator function that uses them
+    def decorator(to_decorate):
+        setattr(to_decorate, '__repr__', make_repr(args=args, kwargs=kwargs))
         return to_decorate
+
+    return decorator
