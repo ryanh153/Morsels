@@ -105,7 +105,7 @@ class RateLimitTests(unittest.TestCase):
             sleeping(0.015625)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_sleep_argument(self):
         @ratelimit.ratelimit(per_second=5, sleep=True)
         def subtract(x, y):
@@ -129,7 +129,7 @@ class RateLimitTests(unittest.TestCase):
         self.assertGreaterEqual(t5-t1, 1)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_thread_safety(self):
         from concurrent.futures import ThreadPoolExecutor
         import os.path
