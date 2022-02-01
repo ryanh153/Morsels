@@ -174,7 +174,7 @@ class RateLimitTests(unittest.TestCase):
         self.assertGreater(concurrent, 0, "Threads didn't run concurrently")
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_works_as_context_manager(self):
         five_per_second = ratelimit.ratelimit(per_second=5)
         with self.assertRaises(Exception):

@@ -1,7 +1,6 @@
 import time
 from functools import wraps
 from collections import deque
-from contextlib import contextmanager
 
 
 class ratelimit:
@@ -9,44 +8,28 @@ class ratelimit:
     def __init__(self, per_second, sleep=False):
         self.per_second = per_second
         self.sleep = sleep
+        self.calls = deque(maxlen=self.per_second)
 
     def __call__(self, func):
         @wraps(func)
         def inner(*args, **kwargs):
-            # nonlocal sleep
-            now = time.perf_counter()
-            # if len(calls):
-            #     print(f'We have a queue of size {len(calls)} and the total time span is {(now - calls[0])}')
-            if len(calls) == per_second and (now - calls[0]) < 1.0:
-                if sleep:
-                    time.sleep(1.0 - (now - calls[0]))  # Wait for one second since first call in sequence
-                else:
-                    raise Exception(f'{func} called more than {per_second} times in a second')
-            calls.append(now)
+            self.called(func)
             return func(*args, **kwargs)
-
-def ratelimit(per_second, sleep=False):
-    calls = deque(maxlen=per_second)
-
-    def decorator(func):
-
-        @wraps(func)
-        def inner(*args, **kwargs):
-            # nonlocal sleep
-            now = time.perf_counter()
-            # if len(calls):
-            #     print(f'We have a queue of size {len(calls)} and the total time span is {(now - calls[0])}')
-            if len(calls) == per_second and (now - calls[0]) < 1.0:
-                if sleep:
-                    time.sleep(1.0 - (now-calls[0]))  # Wait for one second since first call in sequence
-                else:
-                    raise Exception(f'{func} called more than {per_second} times in a second')
-            calls.append(now)
-            return func(*args, **kwargs)
-
         return inner
 
-    try:
-        yield decorator
-    finally:
-        calls = deque(maxlen=per_second)
+    def called(self, func):
+        now = time.perf_counter()
+        if len(self.calls) == self.per_second and (now - self.calls[0]) < 1.0:
+            if self.sleep:
+                time.sleep(1.0 - (now - self.calls[0]))  # Wait for one second since first call in sequence
+                now = time.perf_counter()  # Update to real time the call happens
+            else:
+                raise Exception(f'{func} called more than {self.per_second} times in a second')
+        self.calls.append(now)
+
+    def __enter__(self):
+        self.called(None)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
