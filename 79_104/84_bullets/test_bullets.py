@@ -41,7 +41,7 @@ class ParseBulletsTests(unittest.TestCase):
         self.assertEqual(bullets[3].text, "Fix Python Morsels login page bug")
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_nested_bullets(self):
         bullets = parse_bullets(dedent("""
             - Do laundry
