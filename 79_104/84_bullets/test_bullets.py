@@ -101,7 +101,7 @@ class ParseBulletsTests(unittest.TestCase):
         self.assertEqual(len(bullets[3].children[0].children), 0)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_parent_attribute_and_nested_string_representation(self):
         bullets = parse_bullets(dedent("""
             - Do laundry

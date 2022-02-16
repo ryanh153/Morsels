@@ -1,17 +1,16 @@
-from collections import defaultdict
 from typing import List
 import re
 
 
 leading_spaces = re.compile(r'^(\s*).*')
 bullet_text = re.compile(r'\s*- (.*)')
-print(len(leading_spaces.search('hey').groups()[0]))
 
 
 class Bullet:
-    def __init__(self, string: str) -> None:
+    def __init__(self, string: str, parent=None) -> None:
         self.bullet_string = string
         self._children = list()
+        self._parent = parent
 
     @property
     def text(self) -> str:
@@ -24,8 +23,15 @@ class Bullet:
     def children(self):
         return self._children
 
+    @property
+    def parent(self):
+        return self._parent
+
     def __str__(self) -> str:
-        return self.bullet_string
+        string = self.bullet_string.strip()
+        if self.children:
+            string += '\n' + '\n'.join(f'    {line}' for child in self.children for line in str(child).split('\n'))
+        return string
 
 
 def indent_level(string: str) -> int:
@@ -43,13 +49,8 @@ def parse_bullets(string_data: str) -> List[Bullet]:
             parents[level] = bullet
             bullets.append(bullet)
         else:
-            print(f'Looking for {level-1} in {parents}')
-            child = Bullet(bullet_str)
+            child = Bullet(bullet_str, parent=parents[level-1])
             parents[level-1].add_child(child)
             parents[level] = child
 
-    print([b.text for b in bullets])
     return bullets
-
-##
-
