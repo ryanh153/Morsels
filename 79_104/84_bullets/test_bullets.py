@@ -167,7 +167,7 @@ class ParseBulletsTests(unittest.TestCase):
         """).strip('\n'))
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_bullet_list_string_representation_and_filtering(self):
         bullets = parse_bullets(dedent("""
             - Do laundry
