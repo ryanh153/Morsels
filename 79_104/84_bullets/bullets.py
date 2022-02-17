@@ -1,5 +1,5 @@
 import re
-
+from collections import UserList
 
 leading_spaces = re.compile(r'^(\s*).*')
 bullet_text = re.compile(r'\s*- (.*)')
@@ -54,22 +54,10 @@ class Bullet:
         return string
 
 
-class BulletList:
-
-    def __init__(self):
-        self.bullets = list()
-
-    def __len__(self):
-        return len(self.bullets)
-
-    def __getitem__(self, index):
-        return self.bullets[index]
+class BulletList(UserList):
 
     def __str__(self):
         return '\n'.join(str(bullet) for bullet in self)
-
-    def append(self, item):
-        self.bullets.append(item)
 
     def filter(self, string):
         results = BulletList()
@@ -88,14 +76,11 @@ def parse_bullets(string_data: str) -> BulletList:
     bullets = BulletList()
 
     for bullet_str in string_data.strip().split('\n'):
-        level = indent_level(bullet_str)
-        if level == 0:
-            bullet = Bullet(bullet_str)
-            parents[level] = bullet
-            bullets.append(bullet)
+        if (level := indent_level(bullet_str)) == 0:
+            parents[level] = Bullet(bullet_str)
+            bullets.append(parents[level])
         else:
-            child = Bullet(bullet_str, parent=parents[level-1])
-            parents[level-1].add_child(child)
-            parents[level] = child
+            parents[level-1].add_child(Bullet(bullet_str, parent=parents[level-1]))
+            parents[level] = parents[level-1].children[-1]
 
     return bullets
